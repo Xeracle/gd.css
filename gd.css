@@ -1,9 +1,22 @@
+:root {
+  --bounce-easing: linear(
+    0, 0.004, 0.016, 0.035, 0.063, 0.098, 0.141 13.6%, 0.25, 0.391, 0.563, 0.765,
+    1, 0.891 40.9%, 0.848, 0.813, 0.785, 0.766, 0.754, 0.75, 0.754, 0.766, 0.785,
+    0.813, 0.848, 0.891 68.2%, 1 72.7%, 0.973, 0.953, 0.941, 0.938, 0.941, 0.953,
+    0.973, 1, 0.988, 0.984, 0.988, 1
+  );
+
+  --checkbox-size: 3em;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   height: 100vh;
+  background: #000;
+  gap: 2em;
 }
 
 .flex {
@@ -16,22 +29,58 @@ body {
 }
 
 .gd-checkbox {
+  height: var(--checkbox-size);
+  width: var(--checkbox-size);
+  display: grid;
+  place-content: center;
+  user-select: none;
 
   input[type="checkbox"] {
     display: none;
   }
 
-  input[type="checkbox"]:checked ~ .gd-checkbox-off {
-    display: none;
+  label > input[type="checkbox"]:checked ~ .gd-checkbox-image {
+    background-image: url("/assets/checkbox/GJ_checkOn_001.png");
   }
 
-  input[type="checkbox"]:not(:checked) ~ .gd-checkbox-on {
-    display: none;
+  label > input[type="checkbox"]:not(:checked) ~ .gd-checkbox-image {
+    background-image: url("/assets/checkbox/GJ_checkOff_001.png");
+  }
+
+  .gd-checkbox-image {
+    height: var(--checkbox-size);
+  width: var(--checkbox-size);
+    background-position: center;
+    background-size: cover;
+  }  
+
+  .gd-checkbox-image:active:hover {
+    animation: 300ms var(--bounce-easing) checkbox-scaleIn;
+    scale: 1.25;
+  }
+
+  .gd-checkbox-image:active:not(:hover) {
+    animation: 300ms var(--bounce-easing) checkbox-scaleOut;
+    scale: 1;
   }
 }
 
-.gd-checkbox-on,
-.gd-checkbox-off {
-  height: 124px;
-  width: 124px;
+@keyframes checkbox-scaleIn {
+  0% {
+    scale: 1;
+  }
+
+  100% {
+    scale: 1.25; 
+  }
+}
+
+@keyframes checkbox-scaleOut {
+  0% {
+    scale: 1.25;
+  }
+
+  100% {
+    scale: 1; 
+  }
 }
